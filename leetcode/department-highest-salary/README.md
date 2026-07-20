@@ -79,7 +79,7 @@ Explanation: Max and Jim both have the highest salary in the IT department and H
 ## Stats (from LeetCode)
 
 - **runtime:** 756 ms
-- **runtimePercentile:** 44.6%
+- **runtimePercentile:** 44.9%
 - **memory:** 0B
 - **memoryPercentile:** 100.0%
 
