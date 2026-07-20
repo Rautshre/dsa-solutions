@@ -8,20 +8,20 @@
 
     ## 💡 Intuition
 
-The key insight is to rank employees within each department based on their salary, specifically using DENSE_RANK to correctly handle ties and identify the 'top three unique salaries'.
+The core idea is to rank employees by salary within each department and then select those with a rank of 3 or less. `DENSE_RANK()` is crucial for handling ties correctly and considering 'top three unique salaries'.
 
 ## 🧩 Approach
 
-First, a subquery calculates a DENSE_RANK for each employee within their department, ordered by salary in descending order. This rank correctly assigns the same rank to employees with identical salaries and ensures the next distinct salary gets the next consecutive rank. The outer query then joins this ranked data with the Department table to retrieve department names, filtering for employees whose rank is 3 or less.
+First, a subquery uses `DENSE_RANK()` partitioned by `departmentId` and ordered by `salary` in descending order to assign a rank to each employee within their department. This rank correctly handles ties by giving the same rank to employees with identical salaries. Then, the outer query filters these ranked employees, keeping only those whose rank is 3 or less. Finally, this filtered result is joined with the `Department` table to retrieve the department names for the output.
 
 ## ⏱️ Complexity
 
-- **Time:** O(N log N), primarily due to the sorting required for the DENSE_RANK window function over N employees.
-- **Space:** O(N), as the window function may require storing all N employee records for partitioning and sorting.
+- **Time:** O(N log N), primarily due to the sorting required by the `DENSE_RANK()` window function across all employees.
+- **Space:** O(N), for storing the intermediate results of the window function and the final output table.
 
 ## ⚠️ Edge Cases
 
-This solution gracefully handles departments with fewer than three unique salaries, as well as multiple employees sharing the same salary, by using DENSE_RANK to count unique salary positions.
+This solution gracefully handles departments with fewer than three unique salaries, as `DENSE_RANK()` will simply assign ranks up to the available unique salaries. It also correctly includes all employees who share a salary that falls within the top three unique salaries due to `DENSE_RANK`'s behavior.
 ## Problem Statement
 
 Table: Employee
@@ -118,7 +118,7 @@ Constraints:
 ## Stats (from LeetCode)
 
 - **runtime:** 1174 ms
-- **runtimePercentile:** 31.9%
+- **runtimePercentile:** 32.2%
 - **memory:** 0B
 - **memoryPercentile:** 100.0%
 
