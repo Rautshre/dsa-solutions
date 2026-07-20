@@ -6,6 +6,22 @@
 **Difficulty:** Medium
 **Topic Tags:** `Database`
 
+    ## 💡 Intuition
+
+The key insight is to assign a rank to each distinct salary in descending order and then retrieve the salary corresponding to the Nth rank. DENSE_RANK is crucial for handling duplicate salaries correctly.
+
+## 🧩 Approach
+
+First, a subquery uses `DENSE_RANK() OVER (ORDER BY salary DESC)` to assign a rank to each distinct salary, where the highest salary gets rank 1. Then, the outer query selects the `salary` from this ranked result where the assigned rank (`rnk`) equals `N`. Finally, `LIMIT 1` ensures only one result is returned, and if no salary exists for the Nth rank, the function implicitly returns `NULL`.
+
+## ⏱️ Complexity
+
+- **Time:** O(N log N), due to the sorting operation required by DENSE_RANK over N rows.
+- **Space:** O(N), for storing the intermediate results of salaries and their ranks.
+
+## ⚠️ Edge Cases
+
+The solution correctly handles cases where there are fewer than N distinct salaries by returning `NULL`. It also properly manages duplicate salaries using `DENSE_RANK`, ensuring they receive the same rank and the next distinct salary gets the subsequent rank.
 ## Problem Statement
 
 Table: Employee
@@ -66,8 +82,8 @@ Output:
 
 ## Stats (from LeetCode)
 
-- **runtime:** 386 ms
-- **runtimePercentile:** 99.7%
+- **runtime:** 474 ms
+- **runtimePercentile:** 41.6%
 - **memory:** 0B
 - **memoryPercentile:** 100.0%
 
