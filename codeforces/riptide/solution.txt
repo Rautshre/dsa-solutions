@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int a, b, c;
+        cin>>a>>b>>c;
+        int rnd = 0;
+        vector<int>v = {a, b, c};
+        sort(v.rbegin(), v.rend());
+        cout<< min((v[0]-v[1]), (v[1]-v[2]))<<endl;
+    }
+    return 0;
+}
