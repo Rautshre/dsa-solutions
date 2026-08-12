@@ -16,7 +16,7 @@ define left = 0 and unordered_map<int, int>mpp and then run a loop on right0 to 
 
 ## ⏱️ Complexity
 
-- **Time:** O(n^2)
+- **Time:** O(n)
 - **Space:** O(n)
 
 
